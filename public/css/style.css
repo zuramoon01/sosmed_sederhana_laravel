@@ -1,0 +1,193 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;700;900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.95);
+  color: #fff;
+}
+
+a,
+a:active {
+  color: #0179f2;
+}
+
+button {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  padding: 12px 8px;
+  cursor: pointer;
+  background-color: #fff;
+  border-radius: 4px;
+  min-width: 120px;
+}
+
+input,
+textarea {
+  padding: 4px 8px;
+  color: rgba(0, 0, 0, 0.8);
+  background-color: #fff;
+  border: none;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+input,
+textarea,
+label,
+button {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+#form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#form .container {
+  width: 360px;
+}
+#form .container h1 {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+#form .container form {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+}
+#form .container form .form-input {
+  width: 100%;
+  position: relative;
+}
+#form .container form .form-input input,
+#form .container form .form-input textarea {
+  width: 100%;
+  padding: 26px 8px 8px;
+}
+#form .container form .form-input label {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  color: rgba(0, 0, 0, 0.95);
+  font-weight: 600;
+}
+#form .container form button {
+  width: 100%;
+  margin-top: 16px;
+}
+
+#home {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-items: flex-start;
+  align-items: flex-start;
+}
+#home .title {
+  margin-bottom: 24px;
+}
+#home .post-form {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-items: flex-start;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+#home .post-form button {
+  width: 100%;
+}
+#home .posts {
+  width: 480px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-items: center;
+  align-items: center;
+}
+#home .posts .single-post {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 4px 8px 16px;
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0.95);
+}
+#home .posts .single-post p.post-value {
+  width: 100%;
+  word-wrap: break-word;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  padding: 4px;
+}
+#home .posts .single-post .comment-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 0px 24px;
+}
+#home .posts .single-post .comment-form input {
+  width: 100%;
+  border: 1px solid #000;
+  font-size: 16px;
+  padding: 12px 8px;
+  border-radius: 4px;
+  margin-bottom: 0px;
+}
+#home .posts .single-post .comment-form button {
+  border: 1px solid #000;
+  margin-left: 12px;
+}
+#home .posts .single-post h4 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+#home .posts .single-post .single-comment {
+  border: 1px solid #000;
+  margin-bottom: 12px;
+  padding: 8px;
+}
+#home .posts .single-post .single-comment .comment-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#home .posts .single-post .single-comment .comment-title p.comment-name {
+  font-size: 14px;
+  padding: 4px 0px;
+}
+#home .posts .single-post .single-comment .comment-title p.comment-name span {
+  font-weight: 600;
+}
+#home .posts .single-post .single-comment .comment-title .action-single-comment {
+  display: flex;
+}
+#home .posts .single-post .single-comment .comment-title .action-single-comment a {
+  margin: 0px 8px;
+}
+#home .posts .single-post .single-comment .comment-title .action-single-comment span {
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+#home .posts .single-post .single-comment .comment-form {
+  margin: 4px 0px;
+}
+#home .posts .single-post .single-comment p.comment-value {
+  font-size: 15px;
+}/*# sourceMappingURL=style.css.map */
