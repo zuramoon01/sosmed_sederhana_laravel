@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Post;
 
@@ -10,12 +11,20 @@ class PostController extends Controller
 {
     public function createPost(Request $request)
     {
-        $post = Post::create([
-            'user_id' => auth()->user()->id,
-            'post' => $request->post,
-        ]);
+        DB::beginTransaction();
 
-        return redirect('/');
+        try {
+            $post = Post::create([
+                'user_id' => auth()->user()->id,
+                'post' => $request->post,
+            ]);
+
+            return redirect('/');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            dd($th);
+        }
     }
 
     public function editPostPage(Post $post)
@@ -27,17 +36,33 @@ class PostController extends Controller
 
     public function editPost(Request $request, Post $post)
     {
-        Post::where('id', $post->id)->update([
-            'post' => $request->post,
-        ]);
+        DB::beginTransaction();
 
-        return redirect('/');
+        try {
+            Post::where('id', $post->id)->update([
+                'post' => $request->post,
+            ]);
+
+            return redirect('/');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            dd($th);
+        }
     }
 
     public function deletePost(Post $post)
     {
-        Post::destroy($post->id);
+        DB::beginTransaction();
 
-        return redirect('/');
+        try {
+            Post::destroy($post->id);
+
+            return redirect('/');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            dd($th);
+        }
     }
 }

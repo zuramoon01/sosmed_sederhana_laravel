@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
@@ -16,13 +17,23 @@ class AuthController extends Controller
 
     public function signupUser(Request $request)
     {
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
+        DB::beginTransaction();
 
-        return redirect('/login');
+        try {
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+            ]);
+
+            DB::commit();
+
+            return redirect('/login');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            dd($th);
+        }
     }
 
     public function loginUser(Request $request)

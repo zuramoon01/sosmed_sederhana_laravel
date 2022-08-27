@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Comment;
 use App\Models\Post;
@@ -11,28 +12,52 @@ class CommentController extends Controller
 {
     public function createComment(Request $request, Post $post)
     {
-        $comment = Comment::create([
-            'user_id' => auth()->user()->id,
-            'post_id' => $post->id,
-            'comment' => $request->comment,
-        ]);
+        DB::beginTransaction();
 
-        return redirect('/');
+        try {
+            $comment = Comment::create([
+                'user_id' => auth()->user()->id,
+                'post_id' => $post->id,
+                'comment' => $request->comment,
+            ]);
+
+            return redirect('/');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            dd($th);
+        }
     }
 
     public function editComment(Request $request, Comment $comment)
     {
-        Comment::where('id', $comment->id)->update([
-            'comment' => $request->comment,
-        ]);
+        DB::beginTransaction();
 
-        return redirect('/');
+        try {
+            Comment::where('id', $comment->id)->update([
+                'comment' => $request->comment,
+            ]);
+
+            return redirect('/');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            dd($th);
+        }
     }
 
     public function deleteComment(Request $request, Comment $comment)
     {
-        Comment::destroy($comment->id);
+        DB::beginTransaction();
 
-        return redirect('/');
+        try {
+            Comment::destroy($comment->id);
+
+            return redirect('/');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            dd($th);
+        }
     }
 }
