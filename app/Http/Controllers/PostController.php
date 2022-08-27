@@ -19,6 +19,8 @@ class PostController extends Controller
                 'post' => $request->post,
             ]);
 
+            DB::commit();
+
             return redirect('/');
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -43,6 +45,8 @@ class PostController extends Controller
                 'post' => $request->post,
             ]);
 
+            DB::commit();
+
             return redirect('/');
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -57,6 +61,8 @@ class PostController extends Controller
 
         try {
             Post::destroy($post->id);
+
+            DB::commit();
 
             return redirect('/');
         } catch (\Throwable $th) {

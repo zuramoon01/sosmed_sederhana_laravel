@@ -21,6 +21,8 @@ class CommentController extends Controller
                 'comment' => $request->comment,
             ]);
 
+            DB::commit();
+
             return redirect('/');
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -38,6 +40,8 @@ class CommentController extends Controller
                 'comment' => $request->comment,
             ]);
 
+            DB::commit();
+
             return redirect('/');
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -52,6 +56,8 @@ class CommentController extends Controller
 
         try {
             Comment::destroy($comment->id);
+
+            DB::commit();
 
             return redirect('/');
         } catch (\Throwable $th) {
