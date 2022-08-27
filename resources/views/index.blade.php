@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 @extends('layouts.layout')
 
 @section('main')
@@ -41,8 +42,8 @@
                                 <p class='comment-name'>By : <span>{{ $comment->user->name }}</span></p>
 
                                 @if (auth()->user()->id === $comment->user->id)
-                                    <div class="action-single-comment">
-                                        <a href="" id="editComment">
+                                    <div class="action-single-comment ">
+                                        <a href="" class="editComment">
                                             <span class="material-symbols-outlined">edit</span>
                                         </a>
                                         <a href="/comment/delete/{{ $comment->id }}">
@@ -71,17 +72,20 @@
     </main>
 
     <script>
-        const editComment = document.querySelector('#editComment');
-        const actionEditComment = editComment.parentNode;
-        const editCommentValue = editComment.parentNode.parentNode.parentNode.childNodes[5];
-        const formEditComment = editComment.parentNode.parentNode.parentNode.childNodes[3];
+        const editComment = [...document.querySelectorAll('.editComment')];
 
-        editComment.addEventListener('click', (e) => {
-            e.preventDefault()
+        editComment.forEach(element => {
+            const actionEditComment = element.parentNode;
+            const editCommentValue = element.parentNode.parentNode.parentNode.childNodes[5];
+            const formEditComment = element.parentNode.parentNode.parentNode.childNodes[3];
 
-            actionEditComment.style.display = "none";
-            editCommentValue.style.display = "none";
-            formEditComment.style.display = "flex";
+            element.addEventListener('click', (e) => {
+                e.preventDefault()
+
+                actionEditComment.style.display = "none";
+                editCommentValue.style.display = "none";
+                formEditComment.style.display = "flex";
+            })
         })
     </script>
 @endsection
