@@ -24,6 +24,7 @@ class AuthController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
+                'is_banned' => 0,
             ]);
 
             DB::commit();

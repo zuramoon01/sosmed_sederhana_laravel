@@ -1,13 +1,14 @@
 <?php
 
+use App\Models\Post;
+
+use App\Models\Comment;
+use App\Http\Middleware\Banned;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
-
-use App\Models\Post;
-use App\Models\Comment;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +49,7 @@ Route::controller(AuthController::class)->group(function () {
 Route::controller(PostController::class)->group(function () {
     Route::prefix('/post')->group(function () {
         Route::middleware('auth')->group(function () {
-            Route::post('/', 'createPost');
+            Route::post('/', 'createPost')->middleware(Banned::class);
             Route::get("/edit/{post:id}", 'editPostPage');
             Route::put('/edit/{post:id}', 'editPost');
             Route::get('/delete/{post:id}', 'deletePost');
@@ -64,7 +65,7 @@ Route::controller(PostController::class)->group(function () {
 Route::controller(CommentController::class)->group(function () {
     Route::prefix('/comment')->group(function () {
         Route::middleware('auth')->group(function () {
-            Route::post('/{post:id}', 'createComment');
+            Route::post('/{post:id}', 'createComment')->middleware(Banned::class);
             Route::put('/edit/{comment:id}', 'editComment');
             Route::get('/delete/{comment:id}', 'deleteComment');
         });
