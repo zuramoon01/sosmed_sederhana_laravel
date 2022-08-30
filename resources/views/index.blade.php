@@ -27,7 +27,8 @@
                         <a href="/post/delete/{{ $post->id }}">delete</a>
                     @endif
 
-                    <form action="/comment/{{ $post->id }}" method="post" class="comment-form">
+                    {{-- <form action="/comment/{{ $post->id }}" method="post" class="comment-form" id="comment-form"> --}}
+                    <form class="comment-form" id="comment-form">
                         @csrf
                         <input type="text" name="comment" placeholder="Your comment">
                         <button type="submit">Comment</button>
@@ -54,8 +55,9 @@
                             </div>
 
                             @if (auth()->user()->id === $comment->user->id)
-                                <form action="/comment/edit/{{ $comment->id }}" method="post" class="comment-form"
-                                    style="display: none;">
+                                {{-- <form action="/comment/edit/{{ $comment->id }}" method="post" class="comment-form"
+                                    style="display: none;"> --}}
+                                <form class="comment-form">
                                     @csrf
                                     @method('put')
                                     <input type="text" name="comment" placeholder="Your comment">
@@ -86,6 +88,29 @@
                 editCommentValue.style.display = "none";
                 formEditComment.style.display = "flex";
             })
+        })
+
+        document.querySelector('#comment-form').addEventListener('submit', (e) => {
+            e.preventDefault()
+            console.log('success');
+        })
+
+        $('#comment-form').submit(function(e) {
+            e.preventDefault()
+            console.log('success');
+
+            $.ajax({
+                url: "{{ url('/comment/edit/$comment->id') }}",
+                type: "POST",
+                data: $("#comment-form").serialize(),
+                success: (result) => {
+                    console.log(result);
+                }
+                error: function(result) {
+                    console.log(result);
+                }
+            })
+
         })
     </script>
 @endsection
