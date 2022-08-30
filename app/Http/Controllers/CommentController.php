@@ -12,25 +12,23 @@ class CommentController extends Controller
 {
     public function createComment(Request $request, Post $post)
     {
-        // DB::beginTransaction();
+        DB::beginTransaction();
 
-        // try {
-        //     $comment = Comment::create([
-        //         'user_id' => auth()->user()->id,
-        //         'post_id' => $post->id,
-        //         'comment' => $request->comment,
-        //     ]);
+        try {
+            $comment = Comment::create([
+                'user_id' => auth()->user()->id,
+                'post_id' => $post->id,
+                'comment' => $request->comment,
+            ]);
 
-        //     DB::commit();
+            DB::commit();
 
-        //     return redirect('/');
-        // } catch (\Throwable $th) {
-        //     DB::rollBack();
+            return view('single_comment_page', ['comment' => $comment]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
 
-        //     dd($th);
-        // }
-
-        return response()->json('ok');
+            dd($th);
+        }
     }
 
     public function editComment(Request $request, Comment $comment)

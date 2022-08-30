@@ -75,3 +75,7 @@ Route::controller(CommentController::class)->group(function () {
 // Route::post('/comment/{post:id}', [CommentController::class, 'createComment']);
 // Route::put('/comment/edit/{comment:id}', [CommentController::class, 'editComment']);
 // Route::get('/comment/delete/{comment:id}', [CommentController::class, 'deleteComment']);
+
+Route::get('/test', function () {
+    return response()->json('ok');
+});

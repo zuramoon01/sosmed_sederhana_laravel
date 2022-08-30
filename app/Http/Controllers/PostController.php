@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\Comment;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -21,7 +22,10 @@ class PostController extends Controller
 
             DB::commit();
 
-            return redirect('/');
+            return view('single_post_page', [
+                'post' => $post,
+                'comments' => Comment::all(),
+            ]);
         } catch (\Throwable $th) {
             DB::rollBack();
 

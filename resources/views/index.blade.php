@@ -8,7 +8,7 @@
             <a href="/logout">Logout</a>
         </div>
 
-        <form action="/post" method="post" class="post-form">
+        <form class="post-form">
             @csrf
             <textarea name="post" id="post" cols="50" rows="5" placeholder="Your post"></textarea>
             <button type="submit">Post</button>
@@ -27,9 +27,10 @@
                         <a href="/post/delete/{{ $post->id }}">delete</a>
                     @endif
 
-                    {{-- <form action="/comment/{{ $post->id }}" method="post" class="comment-form" id="comment-form"> --}}
-                    <form class="comment-form" id="comment-form">
+                    {{-- <form action="/comment/{{ $post->id }}" method="post" class="comment-form"> --}}
+                    <form class="comment-form create-form-comment" data-post_id="{{ $post->id }}">
                         @csrf
+                        {{-- <input type="hidden" name="post_id" value={{ $post->id }}> --}}
                         <input type="text" name="comment" placeholder="Your comment">
                         <button type="submit">Comment</button>
                     </form>
@@ -55,9 +56,8 @@
                             </div>
 
                             @if (auth()->user()->id === $comment->user->id)
-                                {{-- <form action="/comment/edit/{{ $comment->id }}" method="post" class="comment-form"
-                                    style="display: none;"> --}}
-                                <form class="comment-form">
+                                <form action="/comment/edit/{{ $comment->id }}" method="post" class="comment-form"
+                                    style="display: none;">
                                     @csrf
                                     @method('put')
                                     <input type="text" name="comment" placeholder="Your comment">
@@ -90,27 +90,38 @@
             })
         })
 
-        document.querySelector('#comment-form').addEventListener('submit', (e) => {
+        $('.post-form').submit(function(e) {
             e.preventDefault()
-            console.log('success');
-        })
-
-        $('#comment-form').submit(function(e) {
-            e.preventDefault()
-            console.log('success');
 
             $.ajax({
-                url: "{{ url('/comment/edit/$comment->id') }}",
-                type: "POST",
-                data: $("#comment-form").serialize(),
+                url: "{{ url('/post') }}",
+                type: "post",
+                data: $(this).serialize(),
                 success: (result) => {
+                    $(this).next().next().append(result);
+                },
+                erros: (result) => {
                     console.log(result);
                 }
+            })
+        })
+
+        $('.comment-form').submit(function(e) {
+            e.preventDefault()
+
+            let postId = $(this).data('post_id');
+
+            $.ajax({
+                url: "{{ url('/comment') }}/" + postId,
+                type: "post",
+                data: $(this).serialize(),
+                success: (result) => {
+                    $(this).parent().append(result);
+                },
                 error: function(result) {
                     console.log(result);
                 }
             })
-
         })
     </script>
 @endsection
